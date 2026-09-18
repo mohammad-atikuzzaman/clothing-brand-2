@@ -46,12 +46,21 @@ export const metadata: Metadata = {
     siteName: "NOIR ATELIER",
     locale: "en_BD",
     type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "NOIR ATELIER | Studio Clothing & Architectural Basics",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "NOIR ATELIER | Studio Clothing & Architectural Basics",
     description:
       "Contemporary heavyweight streetwear basics with nationwide Cash on Delivery in Bangladesh.",
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -59,12 +68,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
     ],
     apple: [
-      { url: "/apple-icon", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
+    shortcut: "/favicon.ico",
   },
 };
 
