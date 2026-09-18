@@ -7,7 +7,7 @@ import { useCartStore } from "@/store/cart-store";
 import { formatCurrency } from "@/lib/utils";
 
 interface CartDrawerProps {
-  onOpenCheckout: () => void;
+  onOpenCheckout?: () => void;
 }
 
 export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
@@ -216,7 +216,11 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
               <button
                 onClick={() => {
                   setIsOpen(false);
-                  onOpenCheckout();
+                  if (onOpenCheckout) {
+                    onOpenCheckout();
+                  } else {
+                    window.location.href = "/?checkout=open#catalog";
+                  }
                 }}
                 className="w-full py-3.5 px-5 rounded-2xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs tracking-wide transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer group"
               >

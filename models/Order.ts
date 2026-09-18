@@ -91,5 +91,8 @@ const OrderSchema = new Schema(
   }
 );
 
+OrderSchema.index({ createdAt: -1 });
+OrderSchema.index({ "customer.phone": 1, createdAt: -1 });
+
 export const Order: Model<IOrder> =
   mongoose.models.Order || mongoose.model<IOrder>("Order", OrderSchema);

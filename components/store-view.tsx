@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ProductType } from "@/lib/catalog-data";
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
@@ -10,21 +10,40 @@ import { CartDrawer } from "@/components/cart-drawer";
 import { CheckoutModal } from "@/components/checkout-modal";
 import { OrderSuccessModal } from "@/components/order-success-modal";
 import { Footer } from "@/components/footer";
+import { CookieConsent } from "@/components/cookie-consent";
 import { OrderActionResult } from "@/actions/order-actions";
 import { Sparkles, SlidersHorizontal } from "lucide-react";
+import { useCartStore } from "@/store/cart-store";
+
+import { StoreSettingsType, DEFAULT_STORE_SETTINGS } from "@/lib/settings-types";
 
 interface StoreViewProps {
   initialProducts: ProductType[];
   dataSource: string;
+  settings?: StoreSettingsType;
 }
 
 const CATEGORIES = ["All", "Minimalist", "Men", "Women", "Accessories"];
 
-export function StoreView({ initialProducts, dataSource }: StoreViewProps) {
+export function StoreView({
+  initialProducts,
+  dataSource,
+  settings = DEFAULT_STORE_SETTINGS,
+}: StoreViewProps) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [orderResult, setOrderResult] = useState<OrderActionResult | null>(null);
+
+  useEffect(() => {
+    if (settings) {
+      useCartStore.getState().setDeliveryRates(
+        settings.deliveryInsideDhaka,
+        settings.deliveryOutsideDhaka,
+        settings.freeShippingThreshold
+      );
+    }
+  }, [settings]);
 
   // Filter products by selected category
   const filteredProducts = initialProducts.filter((product) => {
@@ -39,6 +58,7 @@ export function StoreView({ initialProducts, dataSource }: StoreViewProps) {
         activeCategory={activeCategory}
         onSelectCategory={setActiveCategory}
         categories={CATEGORIES}
+        settings={settings}
       />
 
       <main className="flex-grow">
@@ -103,7 +123,7 @@ export function StoreView({ initialProducts, dataSource }: StoreViewProps) {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer settings={settings} />
 
       {/* Interactive Overlays & Drawers */}
       <CartDrawer onOpenCheckout={() => setIsCheckoutOpen(true)} />
@@ -123,6 +143,8 @@ export function StoreView({ initialProducts, dataSource }: StoreViewProps) {
         product={quickViewProduct}
         onClose={() => setQuickViewProduct(null)}
       />
+
+      <CookieConsent />
     </div>
   );
 }

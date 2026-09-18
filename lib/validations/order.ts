@@ -34,8 +34,10 @@ export const createOrderSchema = z.object({
   deliveryZone: z.enum(["Inside Dhaka", "Outside Dhaka"]),
   specialNotes: z.string().trim().max(300).optional(),
   items: z.array(orderItemSchema).min(1, "Your cart is empty"),
-  // Honeypot field: invisible to humans, auto-filled by automated spam bots
+  // Honeypot anti-bot fields
   website_field_hp: z.string().optional(),
+  form_verify_token_hp: z.string().optional(),
+  formLoadedAt: z.number().optional(),
 });
 
 export type CreateOrderInput = z.infer<typeof createOrderSchema>;

@@ -16,7 +16,10 @@ interface CartStore {
   items: CartItem[];
   isOpen: boolean;
   deliveryZone: "Inside Dhaka" | "Outside Dhaka";
-  
+  deliveryInsideDhaka: number;
+  deliveryOutsideDhaka: number;
+  freeShippingThreshold: number;
+
   // Actions
   addItem: (item: Omit<CartItem, "quantity"> & { quantity?: number }) => void;
   removeItem: (productId: string, size: string, color?: string) => void;
@@ -29,6 +32,7 @@ interface CartStore {
   clearCart: () => void;
   setIsOpen: (isOpen: boolean) => void;
   setDeliveryZone: (zone: "Inside Dhaka" | "Outside Dhaka") => void;
+  setDeliveryRates: (inside: number, outside: number, freeThreshold?: number) => void;
 
   // Computed getters
   totalItems: () => number;
@@ -43,6 +47,9 @@ export const useCartStore = create<CartStore>()(
       items: [],
       isOpen: false,
       deliveryZone: "Inside Dhaka",
+      deliveryInsideDhaka: 70,
+      deliveryOutsideDhaka: 130,
+      freeShippingThreshold: 0,
 
       addItem: (item) => {
         const currentItems = get().items;
@@ -104,6 +111,8 @@ export const useCartStore = create<CartStore>()(
       clearCart: () => set({ items: [] }),
       setIsOpen: (isOpen) => set({ isOpen }),
       setDeliveryZone: (deliveryZone) => set({ deliveryZone }),
+      setDeliveryRates: (deliveryInsideDhaka, deliveryOutsideDhaka, freeShippingThreshold = 0) =>
+        set({ deliveryInsideDhaka, deliveryOutsideDhaka, freeShippingThreshold }),
 
       totalItems: () => {
         return get().items.reduce((sum, item) => sum + item.quantity, 0);
@@ -117,7 +126,15 @@ export const useCartStore = create<CartStore>()(
       },
 
       deliveryCharge: () => {
-        return get().deliveryZone === "Inside Dhaka" ? 70 : 130;
+        const sub = get().subtotal();
+        if (sub === 0) return 0;
+        const threshold = get().freeShippingThreshold;
+        if (threshold > 0 && sub >= threshold) {
+          return 0;
+        }
+        return get().deliveryZone === "Inside Dhaka"
+          ? get().deliveryInsideDhaka
+          : get().deliveryOutsideDhaka;
       },
 
       grandTotal: () => {
@@ -132,6 +149,9 @@ export const useCartStore = create<CartStore>()(
       partialize: (state) => ({
         items: state.items,
         deliveryZone: state.deliveryZone,
+        deliveryInsideDhaka: state.deliveryInsideDhaka,
+        deliveryOutsideDhaka: state.deliveryOutsideDhaka,
+        freeShippingThreshold: state.freeShippingThreshold,
       }),
     }
   )

@@ -20,6 +20,9 @@ export function CheckoutModal({
   const items = useCartStore((s) => s.items);
   const deliveryZone = useCartStore((s) => s.deliveryZone);
   const setDeliveryZone = useCartStore((s) => s.setDeliveryZone);
+  const deliveryInsideDhaka = useCartStore((s) => s.deliveryInsideDhaka);
+  const deliveryOutsideDhaka = useCartStore((s) => s.deliveryOutsideDhaka);
+  const freeShippingThreshold = useCartStore((s) => s.freeShippingThreshold);
   const subtotal = useCartStore((s) => s.subtotal());
   const deliveryCharge = useCartStore((s) => s.deliveryCharge());
   const grandTotal = useCartStore((s) => s.grandTotal());
@@ -30,7 +33,9 @@ export function CheckoutModal({
   const [customerPhone, setCustomerPhone] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [specialNotes, setSpecialNotes] = useState("");
-  const [honeypot, setHoneypot] = useState(""); // Anti-bot trap
+  const [honeypot, setHoneypot] = useState(""); // Anti-bot trap 1
+  const [tokenHoneypot, setTokenHoneypot] = useState(""); // Anti-bot trap 2
+  const [formLoadedAt] = useState<number>(() => Date.now()); // Anti-bot timing defense
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -74,7 +79,9 @@ export function CheckoutModal({
           quantity: i.quantity,
           image: i.image,
         })),
-        website_field_hp: honeypot, // Honeypot trap
+        website_field_hp: honeypot, // Honeypot trap 1
+        form_verify_token_hp: tokenHoneypot, // Honeypot trap 2
+        formLoadedAt, // Timing defense against bots
       };
 
       const result = await placeOrderAction(payload);
@@ -135,7 +142,7 @@ export function CheckoutModal({
 
         <form onSubmit={handleSubmitOrder} className="space-y-4">
           {/* Honeypot field (hidden from real users, traps bots) */}
-          <div className="hidden" aria-hidden="true">
+          <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
             <label htmlFor="website_field_hp">Leave empty</label>
             <input
               type="text"
@@ -143,6 +150,15 @@ export function CheckoutModal({
               name="website_field_hp"
               value={honeypot}
               onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+            <input
+              type="text"
+              id="form_verify_token_hp"
+              name="form_verify_token_hp"
+              value={tokenHoneypot}
+              onChange={(e) => setTokenHoneypot(e.target.value)}
               tabIndex={-1}
               autoComplete="off"
             />
@@ -209,7 +225,7 @@ export function CheckoutModal({
               >
                 <div>Inside Dhaka</div>
                 <div className="text-[11px] opacity-80 mt-0.5">
-                  Delivery Charge: ৳70
+                  Delivery Charge: ৳{deliveryInsideDhaka}
                 </div>
               </button>
 
@@ -224,7 +240,7 @@ export function CheckoutModal({
               >
                 <div>Outside Dhaka</div>
                 <div className="text-[11px] opacity-80 mt-0.5">
-                  Delivery Charge: ৳130
+                  Delivery Charge: ৳{deliveryOutsideDhaka}
                 </div>
               </button>
             </div>
