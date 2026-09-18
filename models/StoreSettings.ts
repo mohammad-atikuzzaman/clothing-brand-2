@@ -18,6 +18,10 @@ export interface IStoreSettings extends Document {
   deliveryInsideDhaka: number;
   deliveryOutsideDhaka: number;
   freeShippingThreshold: number;
+  metaPixelId?: string;
+  metaCapiToken?: string;
+  metaTestEventCode?: string;
+  facebookDomainVerification?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -37,6 +41,10 @@ const StoreSettingsSchema = new Schema(
     deliveryInsideDhaka: { type: Number, default: DEFAULT_STORE_SETTINGS.deliveryInsideDhaka },
     deliveryOutsideDhaka: { type: Number, default: DEFAULT_STORE_SETTINGS.deliveryOutsideDhaka },
     freeShippingThreshold: { type: Number, default: DEFAULT_STORE_SETTINGS.freeShippingThreshold },
+    metaPixelId: { type: String, default: "" },
+    metaCapiToken: { type: String, default: "" },
+    metaTestEventCode: { type: String, default: "" },
+    facebookDomainVerification: { type: String, default: "" },
   },
   {
     timestamps: true,

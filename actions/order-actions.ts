@@ -16,6 +16,8 @@ import {
 } from "@/lib/sanitize";
 import { getAdminSession } from "@/lib/auth";
 import { getStoreSettingsAction } from "@/actions/settings-actions";
+import { headers } from "next/headers";
+import { sendMetaCapiPurchaseEvent } from "@/lib/meta-capi";
 
 export interface FormattedOrder {
   _id: string;
@@ -58,6 +60,13 @@ export interface OrderActionResult {
     deliveryCharge: number;
     total: number;
     itemCount: number;
+    items?: Array<{
+      productId: string;
+      title: string;
+      price: number;
+      quantity: number;
+    }>;
+    eventId?: string;
   };
   isDemoMode?: boolean;
 }
@@ -264,6 +273,32 @@ export async function placeOrderAction(
       ipAddress: clientIp,
     });
 
+    const headerList = await headers();
+    const userAgent = headerList.get("user-agent") || undefined;
+    const eventId = `order_${orderNumber}_${Date.now()}`;
+
+    // Send server-side Purchase event to Meta Conversions API (CAPI)
+    // Runs safely without blocking order completion
+    sendMetaCapiPurchaseEvent({
+      orderNumber,
+      customerName: sanitizedName,
+      customerPhone: sanitizedPhone,
+      deliveryZone: data.deliveryZone,
+      total,
+      items: data.items.map((it) => ({
+        productId: it.productId,
+        title: it.title,
+        price: it.price,
+        quantity: it.quantity,
+      })),
+      eventId,
+      clientIp,
+      userAgent,
+      pixelId: settings.metaPixelId,
+      accessToken: settings.metaCapiToken,
+      testEventCode: settings.metaTestEventCode,
+    }).catch((err) => console.error("Meta CAPI trigger error:", err));
+
     return {
       success: true,
       orderNumber,
@@ -277,6 +312,13 @@ export async function placeOrderAction(
         deliveryCharge,
         total,
         itemCount: data.items.reduce((acc, i) => acc + i.quantity, 0),
+        items: data.items.map((it) => ({
+          productId: it.productId,
+          title: it.title,
+          price: it.price,
+          quantity: it.quantity,
+        })),
+        eventId,
       },
       isDemoMode: false,
     };

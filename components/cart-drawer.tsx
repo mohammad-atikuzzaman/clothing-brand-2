@@ -5,6 +5,7 @@ import Image from "next/image";
 import { X, Trash2, ShoppingBag, ArrowRight, ShieldCheck } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
 import { formatCurrency } from "@/lib/utils";
+import { trackInitiateCheckout } from "@/lib/meta-pixel";
 
 interface CartDrawerProps {
   onOpenCheckout?: () => void;
@@ -215,6 +216,15 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
               {/* Checkout Button */}
               <button
                 onClick={() => {
+                  trackInitiateCheckout({
+                    items: items.map((i) => ({
+                      productId: i.productId,
+                      title: i.title,
+                      price: i.price,
+                      quantity: i.quantity,
+                    })),
+                    total: grandTotal,
+                  });
                   setIsOpen(false);
                   if (onOpenCheckout) {
                     onOpenCheckout();

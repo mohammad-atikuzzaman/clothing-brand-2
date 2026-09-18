@@ -6,6 +6,7 @@ import { X, Check, ShoppingBag, ShieldCheck, Truck } from "lucide-react";
 import { ProductType } from "@/lib/catalog-data";
 import { formatCurrency } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
+import { trackViewContent, trackAddToCart } from "@/lib/meta-pixel";
 
 interface QuickViewProps {
   product: ProductType | null;
@@ -21,7 +22,7 @@ export function ProductQuickViewModal({ product, onClose }: QuickViewProps) {
 
   const addItem = useCartStore((s) => s.addItem);
 
-  // Initialize selections when product changes
+  // Initialize selections and trigger ViewContent event when product opens
   React.useEffect(() => {
     if (product) {
       setSelectedSize(product.sizes[0] || "M");
@@ -29,22 +30,41 @@ export function ProductQuickViewModal({ product, onClose }: QuickViewProps) {
       setActiveImageIdx(0);
       setQuantity(1);
       setIsAdded(false);
+
+      trackViewContent({
+        id: product.id,
+        title: product.title,
+        category: product.category,
+        price: product.discountPrice || product.price,
+      });
     }
   }, [product]);
 
   if (!product) return null;
 
   const handleAdd = () => {
+    const activePrice = product.discountPrice || product.price;
+
     addItem({
       productId: product.id,
       title: product.title,
-      price: product.discountPrice || product.price,
+      price: activePrice,
       size: selectedSize,
       color: selectedColor,
       image: product.images[activeImageIdx] || product.images[0],
       slug: product.slug,
       quantity,
     });
+
+    // Fire Meta Pixel AddToCart event
+    trackAddToCart({
+      id: product.id,
+      title: product.title,
+      category: product.category,
+      price: activePrice,
+      quantity,
+    });
+
     setIsAdded(true);
     setTimeout(() => {
       setIsAdded(false);

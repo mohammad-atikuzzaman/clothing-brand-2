@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getStoreSettingsAction } from "@/actions/settings-actions";
+import { MetaPixel } from "@/components/meta-pixel";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -57,17 +59,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const settings = await getStoreSettingsAction();
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        {settings.facebookDomainVerification && (
+          <meta
+            name="facebook-domain-verification"
+            content={settings.facebookDomainVerification}
+          />
+        )}
+      </head>
+      <body className="min-h-full flex flex-col">
+        <MetaPixel pixelId={settings.metaPixelId} />
+        {children}
+      </body>
     </html>
   );
 }

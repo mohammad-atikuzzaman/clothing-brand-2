@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { CheckCircle2, PhoneCall, Package, ArrowRight, ShieldCheck } from "lucide-react";
 import { OrderActionResult } from "@/actions/order-actions";
 import { formatCurrency } from "@/lib/utils";
+import { trackPurchase } from "@/lib/meta-pixel";
 
 interface OrderSuccessModalProps {
   orderResult: OrderActionResult | null;
@@ -14,6 +15,17 @@ export function OrderSuccessModal({
   orderResult,
   onClose,
 }: OrderSuccessModalProps) {
+  useEffect(() => {
+    if (orderResult?.success && orderResult.orderSummary) {
+      trackPurchase({
+        orderNumber: orderResult.orderSummary.orderNumber,
+        total: orderResult.orderSummary.total,
+        items: orderResult.orderSummary.items,
+        eventId: orderResult.orderSummary.eventId,
+      });
+    }
+  }, [orderResult]);
+
   if (!orderResult || !orderResult.success || !orderResult.orderSummary) {
     return null;
   }

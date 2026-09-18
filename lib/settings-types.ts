@@ -12,6 +12,10 @@ export interface StoreSettingsType {
   deliveryInsideDhaka: number;
   deliveryOutsideDhaka: number;
   freeShippingThreshold: number;
+  metaPixelId?: string;
+  metaCapiToken?: string;
+  metaTestEventCode?: string;
+  facebookDomainVerification?: string;
 }
 
 export const DEFAULT_STORE_SETTINGS: StoreSettingsType = {
@@ -28,4 +32,8 @@ export const DEFAULT_STORE_SETTINGS: StoreSettingsType = {
   deliveryInsideDhaka: 70,
   deliveryOutsideDhaka: 130,
   freeShippingThreshold: 3000,
+  metaPixelId: "",
+  metaCapiToken: "",
+  metaTestEventCode: "",
+  facebookDomainVerification: "",
 };

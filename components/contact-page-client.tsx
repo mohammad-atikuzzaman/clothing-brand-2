@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { StoreSettingsType } from "@/lib/settings-types";
 import { submitContactInquiryAction } from "@/actions/contact-actions";
+import { trackContact } from "@/lib/meta-pixel";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -166,6 +167,7 @@ export function ContactPageClient({
                 {/* Phone Call Card */}
                 <a
                   href={`tel:${settings.phone}`}
+                  onClick={() => trackContact("Phone Call")}
                   className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 transition-all group shadow-sm"
                 >
                   <div className="p-3 rounded-xl bg-neutral-900 text-white group-hover:scale-105 transition-transform">
@@ -189,6 +191,7 @@ export function ContactPageClient({
                   href={`https://wa.me/${cleanPhone}?text=Hello%20NOIR%20ATELIER%20Team%2C%20I%20have%20an%20inquiry%20regarding%20an%20order.`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackContact("WhatsApp")}
                   className="flex items-start gap-4 p-5 rounded-2xl bg-emerald-50/60 border border-emerald-200 hover:border-emerald-600 transition-all group shadow-sm"
                 >
                   <div className="p-3 rounded-xl bg-emerald-600 text-white group-hover:scale-105 transition-transform">

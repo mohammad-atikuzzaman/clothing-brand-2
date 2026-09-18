@@ -385,6 +385,107 @@ export default function AdminSettingsPage() {
           </div>
         </div>
 
+        {/* Section 4: Meta Marketing & Conversion Tracking (Facebook & Instagram Ads) */}
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200 shadow-sm space-y-6">
+          <div className="border-b border-neutral-100 pb-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-bold text-neutral-900 flex items-center gap-2">
+                <Share2 className="w-4 h-4 text-sky-600" />
+                Meta Ads Tracking (Pixel & Conversions API)
+              </h2>
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+                CAPI Dual-Channel Active
+              </span>
+            </div>
+            <p className="text-xs text-neutral-500 mt-0.5">
+              Connect your Meta Pixel ID and Conversions API (CAPI) Token to track ViewContent, AddToCart, InitiateCheckout, and Purchase events with 100% deduplication.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
+            {/* Pixel ID */}
+            <div>
+              <label className="font-bold text-neutral-700 block mb-1.5">
+                Meta Pixel ID
+              </label>
+              <input
+                type="text"
+                value={settings.metaPixelId || ""}
+                onChange={(e) => handleChange("metaPixelId", e.target.value)}
+                placeholder="e.g. 102938475610293"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900 text-neutral-900 font-mono"
+              />
+              <p className="text-[11px] text-neutral-400 mt-1">
+                Found in Meta Events Manager &gt; Data Sources &gt; Pixel Settings.
+              </p>
+            </div>
+
+            {/* Domain Verification Code */}
+            <div>
+              <label className="font-bold text-neutral-700 block mb-1.5">
+                Facebook Domain Verification Code (Optional)
+              </label>
+              <input
+                type="text"
+                value={settings.facebookDomainVerification || ""}
+                onChange={(e) =>
+                  handleChange("facebookDomainVerification", e.target.value)
+                }
+                placeholder="e.g. abcd1234efgh5678ijkl"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900 text-neutral-900 font-mono"
+              />
+              <p className="text-[11px] text-neutral-400 mt-1">
+                From Business Manager &gt; Brand Safety &gt; Domains (DNS/HTML tag).
+              </p>
+            </div>
+
+            {/* Conversions API (CAPI) Access Token */}
+            <div className="sm:col-span-2">
+              <label className="font-bold text-neutral-700 block mb-1.5">
+                Conversions API (CAPI) Access Token
+              </label>
+              <textarea
+                rows={2}
+                value={settings.metaCapiToken || ""}
+                onChange={(e) => handleChange("metaCapiToken", e.target.value)}
+                placeholder="EAAB... (Paste System User or Events Manager Access Token)"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900 text-neutral-900 font-mono text-[11px] resize-none"
+              />
+              <p className="text-[11px] text-neutral-400 mt-1">
+                Generates server-side Purchase events to bypass iOS 14.5+ ATT and ad-blockers, ensuring 100% accurate sales attribution.
+              </p>
+            </div>
+
+            {/* Test Event Code */}
+            <div className="sm:col-span-2">
+              <label className="font-bold text-neutral-700 block mb-1.5">
+                Meta Test Event Code (Optional - For Debugging)
+              </label>
+              <input
+                type="text"
+                value={settings.metaTestEventCode || ""}
+                onChange={(e) =>
+                  handleChange("metaTestEventCode", e.target.value)
+                }
+                placeholder="e.g. TEST12345 (Leave blank for production)"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-900 text-neutral-900 font-mono"
+              />
+              <p className="text-[11px] text-neutral-400 mt-1">
+                Events Manager &gt; Test Events tab. Remove or empty this field before running live paid ad campaigns!
+              </p>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 text-xs text-neutral-600 space-y-1">
+            <div className="font-bold text-neutral-900">
+              ⚡ How Meta Dual-Channel Tracking Works:
+            </div>
+            <p className="text-[11px] leading-relaxed text-neutral-500">
+              When an order is confirmed, both the buyer&apos;s browser (Meta Pixel) and our server (Conversions API) notify Meta using the exact same unique <code className="font-mono bg-white px-1 py-0.5 rounded border border-neutral-200">event_id</code>. Meta automatically deduplicates them, meaning zero duplicate conversions and 100% of purchase values captured.
+            </p>
+          </div>
+        </div>
+
         {/* Bottom Save Bar */}
         <div className="flex justify-end">
           <button

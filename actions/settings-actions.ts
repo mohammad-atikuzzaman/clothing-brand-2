@@ -50,6 +50,10 @@ export async function getStoreSettingsAction(): Promise<StoreSettingsType> {
         typeof settings.freeShippingThreshold === "number"
           ? settings.freeShippingThreshold
           : DEFAULT_STORE_SETTINGS.freeShippingThreshold,
+      metaPixelId: settings.metaPixelId || process.env.NEXT_PUBLIC_META_PIXEL_ID || "",
+      metaCapiToken: settings.metaCapiToken || process.env.META_CAPI_ACCESS_TOKEN || "",
+      metaTestEventCode: settings.metaTestEventCode || process.env.META_TEST_EVENT_CODE || "",
+      facebookDomainVerification: settings.facebookDomainVerification || process.env.FACEBOOK_DOMAIN_VERIFICATION || "",
     };
   } catch (error) {
     console.error("getStoreSettingsAction error:", error);
@@ -97,6 +101,11 @@ export async function updateStoreSettingsAction(
       settingsDoc.deliveryOutsideDhaka = Number(data.deliveryOutsideDhaka);
     if (data.freeShippingThreshold !== undefined)
       settingsDoc.freeShippingThreshold = Number(data.freeShippingThreshold);
+    if (data.metaPixelId !== undefined) settingsDoc.metaPixelId = data.metaPixelId.trim();
+    if (data.metaCapiToken !== undefined) settingsDoc.metaCapiToken = data.metaCapiToken.trim();
+    if (data.metaTestEventCode !== undefined) settingsDoc.metaTestEventCode = data.metaTestEventCode.trim();
+    if (data.facebookDomainVerification !== undefined)
+      settingsDoc.facebookDomainVerification = data.facebookDomainVerification.trim();
 
     await settingsDoc.save();
 

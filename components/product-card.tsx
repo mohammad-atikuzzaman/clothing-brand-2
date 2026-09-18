@@ -6,6 +6,7 @@ import { Plus, Check, Eye } from "lucide-react";
 import { ProductType } from "@/lib/catalog-data";
 import { formatCurrency } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
+import { trackAddToCart } from "@/lib/meta-pixel";
 
 interface ProductCardProps {
   product: ProductType;
@@ -25,14 +26,25 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
+    const activePrice = product.discountPrice || product.price;
+
     addItem({
       productId: product.id,
       title: product.title,
-      price: product.discountPrice || product.price,
+      price: activePrice,
       size: selectedSize,
       color: selectedColor,
       image: product.images[0],
       slug: product.slug,
+      quantity: 1,
+    });
+
+    // Fire Meta Pixel AddToCart
+    trackAddToCart({
+      id: product.id,
+      title: product.title,
+      category: product.category,
+      price: activePrice,
       quantity: 1,
     });
 
