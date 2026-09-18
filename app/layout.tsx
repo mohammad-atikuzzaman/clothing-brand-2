@@ -71,15 +71,13 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
+      <body className="min-h-full flex flex-col">
         {settings.facebookDomainVerification && (
           <meta
             name="facebook-domain-verification"
             content={settings.facebookDomainVerification}
           />
         )}
-      </head>
-      <body className="min-h-full flex flex-col">
         <MetaPixel pixelId={settings.metaPixelId} />
         {children}
       </body>

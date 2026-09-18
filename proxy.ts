@@ -53,20 +53,22 @@ export function proxy(request: NextRequest) {
   );
   response.headers.set("X-XSS-Protection", "1; mode=block");
 
-  // Content Security Policy
-  const cspHeader = `
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
-    style-src 'self' 'unsafe-inline' https:;
-    img-src 'self' blob: data: https://res.cloudinary.com https://images.unsplash.com;
-    font-src 'self' data: https:;
-    connect-src 'self' https:;
-    frame-ancestors 'none';
-    base-uri 'self';
-    form-action 'self';
-  `.replace(/\s{2,}/g, " ").trim();
+  // Content Security Policy (Optimized for Next.js, Turbopack, and Meta Pixel)
+  if (process.env.NODE_ENV === "production") {
+    const cspHeader = `
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://connect.facebook.net https:;
+      style-src 'self' 'unsafe-inline' https:;
+      img-src 'self' blob: data: https://res.cloudinary.com https://images.unsplash.com https://www.facebook.com https:;
+      font-src 'self' data: https:;
+      connect-src 'self' https: ws: wss:;
+      frame-ancestors 'none';
+      base-uri 'self';
+      form-action 'self';
+    `.replace(/\s{2,}/g, " ").trim();
 
-  response.headers.set("Content-Security-Policy", cspHeader);
+    response.headers.set("Content-Security-Policy", cspHeader);
+  }
 
   return response;
 }
