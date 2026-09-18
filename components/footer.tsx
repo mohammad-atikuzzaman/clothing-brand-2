@@ -265,15 +265,15 @@ export function Footer({ settings = DEFAULT_STORE_SETTINGS }: FooterProps) {
       </div>
 
       {/* Bottom Legal & Copyright Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
-        <div className="flex items-center gap-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400 text-center sm:text-left">
+        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
           <span className="font-extrabold text-white tracking-wider">
             NOIR ATELIER
           </span>
-          <span>© {new Date().getFullYear()} All Rights Reserved. Built for Bangladesh.</span>
+          <span className="text-[11px] sm:text-xs">© {new Date().getFullYear()} All Rights Reserved. Built for Bangladesh.</span>
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-[11px] sm:text-xs">
           <span>Nationwide Cash on Delivery</span>
           <span className="text-neutral-700">•</span>
           <Link href="/privacy-policy" className="hover:text-white transition-colors">

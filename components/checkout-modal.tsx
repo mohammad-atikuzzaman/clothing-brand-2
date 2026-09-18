@@ -104,26 +104,27 @@ export function CheckoutModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neutral-950/65 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-neutral-950/65 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-neutral-200 p-6 sm:p-8"
+        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-200 p-5 sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full hover:bg-neutral-100 text-neutral-400 hover:text-neutral-900 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full hover:bg-neutral-100 text-neutral-400 hover:text-neutral-900 transition-colors cursor-pointer"
+          aria-label="Close checkout"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Title */}
-        <div className="mb-6">
+        <div className="mb-5 sm:mb-6 pr-8 sm:pr-0">
           <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md mb-2">
             <ShieldCheck className="w-3.5 h-3.5" />
             100% Cash on Delivery Checkout
           </div>
-          <h2 className="text-2xl font-black text-neutral-900 tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight">
             Complete Your Order
           </h2>
           <p className="text-xs text-neutral-500 mt-1">
@@ -213,34 +214,34 @@ export function CheckoutModal({
             <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
               Delivery Location <span className="text-rose-500">*</span>
             </label>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <button
                 type="button"
                 onClick={() => setDeliveryZone("Inside Dhaka")}
-                className={`p-3 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
+                className={`p-2.5 sm:p-3 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
                   deliveryZone === "Inside Dhaka"
                     ? "border-neutral-900 bg-neutral-900 text-white shadow"
                     : "border-neutral-200 bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
                 }`}
               >
                 <div>Inside Dhaka</div>
-                <div className="text-[11px] opacity-80 mt-0.5">
-                  Delivery Charge: ৳{deliveryInsideDhaka}
+                <div className="text-[10px] sm:text-[11px] opacity-80 mt-0.5">
+                  Delivery: ৳{deliveryInsideDhaka}
                 </div>
               </button>
 
               <button
                 type="button"
                 onClick={() => setDeliveryZone("Outside Dhaka")}
-                className={`p-3 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
+                className={`p-2.5 sm:p-3 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
                   deliveryZone === "Outside Dhaka"
                     ? "border-neutral-900 bg-neutral-900 text-white shadow"
                     : "border-neutral-200 bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
                 }`}
               >
                 <div>Outside Dhaka</div>
-                <div className="text-[11px] opacity-80 mt-0.5">
-                  Delivery Charge: ৳{deliveryOutsideDhaka}
+                <div className="text-[10px] sm:text-[11px] opacity-80 mt-0.5">
+                  Delivery: ৳{deliveryOutsideDhaka}
                 </div>
               </button>
             </div>
@@ -301,7 +302,7 @@ export function CheckoutModal({
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-4 px-6 rounded-2xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-60 text-white font-bold text-sm tracking-wide shadow-xl flex items-center justify-center gap-2 cursor-pointer transition-all"
+            className="w-full py-3.5 sm:py-4 px-4 sm:px-6 rounded-2xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-60 text-white font-bold text-xs sm:text-sm tracking-wide shadow-xl flex items-center justify-center gap-2 cursor-pointer transition-all"
           >
             {isLoading ? (
               <>
@@ -310,8 +311,8 @@ export function CheckoutModal({
               </>
             ) : (
               <>
-                <Truck className="w-4 h-4" />
-                <span>Confirm Cash on Delivery Order • {formatCurrency(grandTotal)}</span>
+                <Truck className="w-4 h-4 shrink-0" />
+                <span className="truncate">Confirm Cash on Delivery • {formatCurrency(grandTotal)}</span>
               </>
             )}
           </button>

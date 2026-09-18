@@ -32,32 +32,32 @@ export default async function AboutPage() {
 
       <main className="flex-grow">
         {/* Editorial Hero Header */}
-        <section className="relative bg-neutral-950 text-white py-24 sm:py-32 overflow-hidden">
+        <section className="relative bg-neutral-950 text-white py-16 sm:py-32 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-800 text-neutral-300 text-xs font-mono uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-800 text-neutral-300 text-xs font-mono uppercase tracking-widest mb-4 sm:mb-6">
               <Sparkles className="w-3 h-3 text-amber-400" />
               Philosophy & Craftsmanship
             </div>
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight">
               Architectural Basics.<br />
               <span className="text-neutral-400 font-light">Zero Synthetic Fillers.</span>
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-4 sm:mt-6 text-sm sm:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
               Founded in Dhaka to challenge fast fashion mediocrity. We engineer heavyweight 240+ GSM organic cotton garments sculpted with permanent drape, built for lifetime durability.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Link
                 href="/#catalog"
-                className="px-8 py-3.5 rounded-full bg-white text-neutral-950 font-bold text-sm hover:bg-neutral-200 transition-all flex items-center gap-2 shadow-lg cursor-pointer"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white text-neutral-950 font-bold text-sm hover:bg-neutral-200 transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
               >
                 <span>Explore Studio Catalog</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/contact"
-                className="px-8 py-3.5 rounded-full bg-neutral-900 text-neutral-200 border border-neutral-700 font-semibold text-sm hover:bg-neutral-800 transition-all"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-neutral-900 text-neutral-200 border border-neutral-700 font-semibold text-sm hover:bg-neutral-800 transition-all flex items-center justify-center"
               >
                 Visit Studio Desk
               </Link>

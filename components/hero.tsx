@@ -92,7 +92,7 @@ export function Hero({ onSelectCategory }: HeroProps) {
     <section
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="relative w-full h-[72vh] min-h-[520px] max-h-[760px] bg-neutral-950 text-white overflow-hidden select-none"
+      className="relative w-full h-[68vh] sm:h-[72vh] min-h-[460px] sm:min-h-[520px] max-h-[760px] bg-neutral-950 text-white overflow-hidden select-none"
     >
       {/* Slide Background Images with smooth fade */}
       {HERO_SLIDES.map((slide, idx) => (
@@ -119,7 +119,7 @@ export function Hero({ onSelectCategory }: HeroProps) {
       <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/80 via-neutral-950/40 to-transparent z-10" />
 
       {/* Main Content Area */}
-      <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-12 md:py-16">
+      <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-8 sm:py-12 md:py-16">
         {/* Top Micro-Tag */}
         <div className="flex items-center gap-3">
           <span className="font-mono text-[11px] uppercase tracking-widest text-neutral-400 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
@@ -131,22 +131,22 @@ export function Hero({ onSelectCategory }: HeroProps) {
         </div>
 
         {/* Central Editorial Headlines */}
-        <div className="max-w-2xl space-y-4 my-auto">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[0.95] text-white">
+        <div className="max-w-2xl space-y-3 sm:space-y-4 my-auto">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-[0.95] text-white break-words">
             {activeSlide.title}
             <span className="block text-neutral-400 font-light italic mt-1">
               {activeSlide.highlight}
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-neutral-300 font-normal max-w-lg leading-relaxed">
+          <p className="text-xs sm:text-base text-neutral-300 font-normal max-w-lg leading-relaxed line-clamp-2 sm:line-clamp-none">
             {activeSlide.subtitle}
           </p>
 
-          <div className="pt-2">
+          <div className="pt-1 sm:pt-2">
             <button
               onClick={() => handleCtaClick(activeSlide.categoryFilter)}
-              className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-neutral-950 font-bold text-xs uppercase tracking-wider hover:bg-neutral-200 transition-all shadow-xl cursor-pointer"
+              className="group inline-flex items-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full bg-white text-neutral-950 font-bold text-xs uppercase tracking-wider hover:bg-neutral-200 transition-all shadow-xl cursor-pointer"
             >
               <span>{activeSlide.ctaText}</span>
               <ArrowDownRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />

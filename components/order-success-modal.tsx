@@ -28,21 +28,21 @@ export function OrderSuccessModal({
   } = orderResult.orderSummary;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neutral-950/70 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-neutral-950/70 backdrop-blur-md animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-neutral-200 p-6 sm:p-8 text-center"
+        className="relative w-full max-w-lg bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-200 p-5 sm:p-8 text-center"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Animated Icon Badge */}
-        <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4 animate-in zoom-in-50 duration-300">
-          <CheckCircle2 className="w-9 h-9" />
+        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3 sm:mb-4 animate-in zoom-in-50 duration-300">
+          <CheckCircle2 className="w-8 h-8 sm:w-9 sm:h-9" />
         </div>
 
-        <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mb-2">
+        <span className="inline-block text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2.5 sm:px-3 py-1 rounded-full mb-2">
           Cash on Delivery Order Placed
         </span>
 
-        <h2 className="text-2xl font-black text-neutral-900 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight">
           Thank You, {customerName.split(" ")[0]}!
         </h2>
         <p className="text-xs text-neutral-500 mt-1 max-w-sm mx-auto">

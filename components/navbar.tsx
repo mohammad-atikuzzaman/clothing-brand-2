@@ -82,14 +82,14 @@ export function Navbar({
     <>
       <header className="sticky top-0 z-40 w-full border-b border-neutral-200/80 bg-white/85 backdrop-blur-md transition-all">
         {/* Micro-announcement banner */}
-        <div className="bg-neutral-900 text-neutral-200 text-xs font-medium py-1.5 px-4 text-center tracking-wider flex items-center justify-center gap-3">
-          <span className="inline-flex items-center gap-1.5 text-neutral-300">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            {settings.announcement}
+        <div className="bg-neutral-900 text-neutral-200 text-[11px] sm:text-xs font-medium py-1.5 px-3 text-center tracking-wide flex items-center justify-center gap-2 overflow-hidden">
+          <span className="inline-flex items-center gap-1.5 text-neutral-300 truncate max-w-full">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <span className="truncate">{settings.announcement}</span>
           </span>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-15 sm:h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
           {/* Mobile Hamburger Button (visible only on mobile) */}
           <div className="flex items-center md:hidden">
             <button
@@ -187,7 +187,7 @@ export function Navbar({
             className="absolute inset-0 bg-neutral-950/60 backdrop-blur-sm"
           />
 
-          <div className="fixed inset-y-0 left-0 max-w-[320px] w-full bg-white shadow-2xl flex flex-col justify-between p-6 z-10 animate-in slide-in-from-left duration-300 overflow-y-auto">
+          <div className="fixed inset-y-0 left-0 w-[85vw] max-w-[320px] bg-white shadow-2xl flex flex-col justify-between p-5 sm:p-6 z-10 animate-in slide-in-from-left duration-300 overflow-y-auto">
             <div>
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-6 border-b border-neutral-100">

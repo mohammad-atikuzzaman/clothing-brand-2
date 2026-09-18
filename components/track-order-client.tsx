@@ -156,7 +156,7 @@ export function TrackOrderClient({
                   </p>
                 </div>
 
-                <div className="text-right">
+                <div className="text-left sm:text-right">
                   <span
                     className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
                       result.status === "Delivered"
@@ -220,7 +220,7 @@ export function TrackOrderClient({
               </div>
 
               {/* Concierge Help Callout */}
-              <div className="pt-4 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-600 bg-neutral-50 p-4 rounded-2xl">
+              <div className="pt-4 border-t border-neutral-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-neutral-600 bg-neutral-50 p-4 rounded-2xl">
                 <div>
                   Need immediate address correction or delivery reschedule?
                 </div>

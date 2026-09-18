@@ -53,22 +53,23 @@ export function ProductQuickViewModal({ product, onClose }: QuickViewProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neutral-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-neutral-950/65 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-neutral-200/80 flex flex-col md:flex-row overflow-hidden"
+        className="relative w-full max-w-4xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-200/80 flex flex-col md:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-neutral-100/80 hover:bg-neutral-900 hover:text-white transition-colors cursor-pointer"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-2 rounded-full bg-white/95 text-neutral-800 backdrop-blur-md shadow-md hover:bg-neutral-900 hover:text-white transition-colors cursor-pointer"
+          aria-label="Close details"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Image Gallery */}
-        <div className="w-full md:w-1/2 p-6 flex flex-col gap-4 bg-neutral-50/50">
-          <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-neutral-200">
+        <div className="w-full md:w-1/2 p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 bg-neutral-50/50">
+          <div className="relative aspect-[4/3] sm:aspect-[3/4] max-h-[260px] sm:max-h-none w-full rounded-xl sm:rounded-2xl overflow-hidden bg-neutral-200">
             <Image
               src={product.images[activeImageIdx] || product.images[0]}
               alt={product.title}
@@ -79,12 +80,12 @@ export function ProductQuickViewModal({ product, onClose }: QuickViewProps) {
 
           {/* Thumbnails */}
           {product.images.length > 1 && (
-            <div className="flex gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
               {product.images.map((img, idx) => (
                 <button
                   key={img}
                   onClick={() => setActiveImageIdx(idx)}
-                  className={`relative w-16 h-20 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                  className={`relative w-14 h-16 sm:w-16 sm:h-20 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shrink-0 ${
                     activeImageIdx === idx
                       ? "border-neutral-900 scale-95"
                       : "border-transparent opacity-70 hover:opacity-100"
@@ -103,7 +104,7 @@ export function ProductQuickViewModal({ product, onClose }: QuickViewProps) {
         </div>
 
         {/* Product Information */}
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between">
+        <div className="w-full md:w-1/2 p-5 sm:p-6 md:p-8 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-neutral-400">

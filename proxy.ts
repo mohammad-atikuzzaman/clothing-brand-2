@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { isIpBanned } from "@/lib/rate-limit";
 import { isMaliciousBot } from "@/lib/security";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     request.headers.get("x-real-ip") ||
